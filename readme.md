@@ -26,5 +26,5 @@ If an item sold, user can see the bidder(last bid) user information and contact 
 
 ### Video
 
-[Youtube](https://magazine-news.herokuapp.com)
+[Youtube](https://www.youtube.com/watch?v=ASmErK8-OSc)
 
