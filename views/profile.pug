@@ -1,0 +1,84 @@
+include ./header
+
+.container(style='background-color: #e9e9e9; padding: 20px 20px; padding-bottom: 50px')
+    .row
+        .col-12
+            header
+                a(href='/' style='margin-right: 10px') Home
+                if !additem
+                    a(href='/profile/additem' style='margin-right: 10px') + Add an item
+                else
+                    a(href='/profile' style='margin-right: 10px') Profile
+                a(href='/logout' style='float: right') Sign out
+    if !additem && !showBid
+        .row
+            for item in items
+                .col-md-4
+                    article.items
+                        - let firstImg = item.images.split(',')[0]
+                        img.img-fluid(src=`/uploads/${firstImg}`)
+                        h5= item.name
+                        footer
+                            
+                            span= `${new Date(item.date).getDate()}/${new Date(item.date).getMonth()}/${new Date(item.date).getFullYear()}`
+                            if item.sold
+                                a( href=`/profile/showbid/${item._id}` style='color:green; float: right;') Sold
+                            else if !item.sold && item.bidded
+                                span(style='color:red;') Not sold
+                            else if !item.bidded
+                                span(style='color:blue;') In queue
+    else if showBid 
+        .col-md-8(style='margin: auto; margin-top: 20px')
+            .itemShow
+                h4(style='margin-bottom: 20px')= item[0].name
+                if item[0].images.match(/\,/)
+                    - let image = item[0].images.split(',');
+                    img(src=`/uploads/${image[0]}`)
+                else
+                    img(src=`/uploads/${item[0].images}`)
+                .info
+                    div
+                        p= 'price: '
+                        p= `${bid[0].price}$`
+                    div
+                        p= 'Full name: '
+                        p= user[0].fullname
+                    div
+                        p= 'Email address: '
+                        p= user[0].email
+                    div(style='border-bottom: 0px')
+                        p= 'Phone number: '
+                        p= user[0].address
+
+    else if additem
+        .row
+            .col-md-8(style='margin: auto')
+                form(method='post' action='/profile/additem' enctype="multipart/form-data" style='background-color: white; padding: 10px;')
+                    .form-group
+                        p Item name
+                        input.form-control(type='text' name='name' required)
+                    .form-group
+                        p Details
+                        textarea.form-control(type='text' name='detail' required)
+                    .form-group
+                        p Price in USD
+                        input.form-control(type='number' name='price' required)
+                    .form-group
+                        p Images
+                        input.form-control(type='file' name='images' multiple required)
+                    .form-group
+                        select.form-control(name='category' required)
+                            option(value='') -- Select Category --
+                            for cat in categories
+                                option(value=cat._id)= cat.name
+                    .form-group
+                        select.form-control(name='start_bid_date' required)
+                            option(value='') -- Bid start after --
+                            option(value='1m')= '1 minute'
+                            option(value='1h')= '1 hour'
+                            option(value='1d')= '1 day'
+                    .form-group
+                        input.btn.btn-primary.form-control(type='submit' value='+ Add')
+                    .messages
+
+    

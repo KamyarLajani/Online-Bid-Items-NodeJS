@@ -1,0 +1,111 @@
+include ./header
+body
+    script(src="/scripts/vue.js")
+    .container
+        if !noItem
+            .row
+                .col-12
+                    #app
+                        template
+                            .slider-container
+                                span.leftArrow(v-show='leftArrow' @click='previous()') &lt;
+                                .slider
+                                    .images(@mousedown='mouseDown($event)' @mousemove='mouseMove($event)' @mouseup='mouseUp($event)' @touchstart="mouseDown($event, 'touched')" @touchmove="mouseMove($event, 'touched')" @touchend='mouseUp($event)')
+                                        - let images = currentItem[0].images.split(',');
+                                        - let i = 0;
+                                        while i< images.length
+                                            img(src=`/uploads/${images[i]}` alt='Image')
+                                            - i++;
+                                    
+                                    img.pause(v-if='autoPlayed' @click='pause()' img='' src='https://i.ibb.co/ggMqJsr/pause.png' alt='pause' title='pause')
+                                    img.autoplay(v-if='!autoPlayed' @click='autoPlay()' img='' src='https://i.ibb.co/ZH97nX0/play.png' alt='play' title='play')
+                                span.rightArrow(v-show='rightArrow' @click='next()') &gt;
+                                .circle
+                                    // circle buttons added here by javascript dynamically
+            .row
+                .col-md-6
+                    .info
+                        div
+                            p= 'Item name: '
+                            p= currentItem[0].name
+                        div
+                            p= 'Category: '
+                            p= category[0].name
+                        div
+                            p= 'Address: '
+                            p= owner[0].address
+                        div
+                            p= 'Phone number: '
+                            p= owner[0].phone
+                        .desc
+                            h6= 'Details: '
+                            p(style='float: right; display: block; width: 100%')= currentItem[0].detail
+
+                .col-md-6
+                    .bid
+                        .bid-container
+                            #activeBorder.active-border
+                                #circle.circle-bid
+                                .circle-content
+                                    p Current price: 
+                                    p(style='font-weight: bold;')= currentPrice
+                    if loggedInUser
+                        .add-bid(style='width: 80%; margin: auto;')
+                            h5 Add a bid
+                            .form-inline
+                                input.form-control(style='width: 80%' type='number' value=`${currentPrice}` min=`${currentPrice+1}`)
+                                p(style='position: relative; top: 5px; left: 10px') USD
+                            p.error(style='color: red; margin: 10px 0px')
+                            button.form-control.btn.btn-primary(onclick='obj.sendBid()' style='margin-top: 10px') Add
+            .row(style='margin: 30px 5px;')
+                .col-md-6
+                    .previous-bids
+                        h5 Previous bids
+                        .content
+                            if previous_bids
+                                for bid in previous_bids
+                                    div
+                                        p= bid.address
+                                        h6= `${bid.price}$`
+                
+                .col-md-6
+                    if !loggedInUser
+                        .signin(style='width: 80%; margin: auto; margin-top: 30px')
+                            h5(style='text-align: center;') Sign in to add a bid
+                            a.form-control.btn(href='/login' style='border: 1px solid silver; margin-bottom: 5px' ) Sign in
+                            a.form-control.btn(href='/login' style='border: 1px solid silver;') + Sign up
+                    else
+                        a.btn-btn-secondery(href='/profile' style='display:block; text-align: center;') Profile
+
+                audio(id="clockAudio" controls style="display: none;")
+                    source(src="/audio/clock.mp3" type="audio/mp3")
+                audio(id="bonusTimeAudio" controls style="display: none;")
+                    source(src="/audio/bonusstart.mp3" type="audio/mp3")
+                audio(id="itemSoldAudio" controls style="display: none;")
+                    source(src="/audio/itemsold.mp3" type="audio/mp3")
+                audio(id="nextItemAudio" controls style="display: none;")
+                    source(src="/audio/nextitem.mp3" type="audio/mp3")
+                audio(id="bidPlacedAudio" controls style="display: none;")
+                    source(src="/audio/bidplaced.mp3" type="audio/mp3")
+            
+        else
+            .row
+                .col-12
+                    div(style='overflow: auto;')
+                        a(href='/' style='display: block; float: left; margin: 5px 10px;') Home
+                        a(href='/login' style='display: block; float: left; margin: 5px 10px;') Sign in
+                        a(href='/logout' style='display: block; float: left; margin: 5px 10px;') Sign out
+                        a(href='/profile' style='display: block; float: left; margin: 5px 10px;') Profile
+                    h4 There is no item in the queue       
+
+    if !noItem
+        script(src='/scripts/vueapp.js')
+        script(src='/scripts/jquery.js')
+        script(src='/scripts/script.js')
+
+
+
+
+
+
+

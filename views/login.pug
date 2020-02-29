@@ -1,0 +1,54 @@
+include ./header
+
+.container
+    .row
+        .col-md-8(style='position: fixed; top: 10px; margin: auto; z-index: 100;')
+                    if register
+                        form.register(method='post' action='/register')
+                            h5(style='text-align: center; margin-top: 10px;') Register
+                            .form-group
+                                p Fullname
+                                input.form-control(type='text' name='fullname')
+                            .form-group
+                                p Email address
+                                input.form-control(type='email' name='email')
+                            .form-group
+                                p Country/Address
+                                input.form-control(type='text' name='address')
+                            .form-group
+                                p Phone number
+                                input.form-control(type='text' name='phone')
+                            .form-group
+                                p Password
+                                input.form-control(type='password' name='password')
+                            .form-group
+                                p Re enter password
+                                input.form-control(type='password' name='password2')
+                            .form-group
+                                input.btn.btn-primary.form-control(type='submit' value='Submit')
+                            .form-group
+                                a( href='/login' style='color: #3cacd7; cursor: pointer;') Login
+                            .messages
+                                if submited
+                                    if errors
+                                        for error in errors
+                                            p(style='padding: 5px 10px; color: red')= error
+                                    else if success
+                                        p(style='padding: 5px 10px; color: green')= success
+                    else if login
+                        form.login(method='post' action='/login')
+                            h5(style='text-align: center; margin-top: 10px;') Login
+                            .form-group
+                                p Email address
+                                input.form-control(type='email' name='email')
+                            .form-group
+                                p Password
+                                input.form-control(type='password' name='password')
+
+                            .form-group
+                                input.btn.btn-primary.form-control(type='submit' value='Submit')
+                            .form-group
+                                a( href='/register' style='color: #3cacd7; cursor: pointer;') Register
+                            .messages
+                                if(login_errors)
+                                    p(style='padding: 5px 10px; color: red')= login_errors
