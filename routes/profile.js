@@ -66,7 +66,7 @@ router.post('/profile/additem', checkAuthenticated, (req, res)=>{
                 
                 (async ()=>{
                     if(fields.start_bid_date == '1m'){
-                        fields.start_bid_date = new Date().getTime() + 10000;
+                        fields.start_bid_date = new Date().getTime() + 60000;
                     }
                     else if(fields.start_bid_date == '1h'){
                         fields.start_bid_date = new Date().getTime() + 3600000;
