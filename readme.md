@@ -4,7 +4,7 @@ This app is developed with Node.js and MongoDB, WS(Websocket) library.
 Online bidding items, with timer limits.
 
 
-![demo](https://raw.githubusercontent.com/kamyarlajani/Online-Bid-Items-NodeJS/master/demo.gif)   
+![demo](https://raw.githubusercontent.com/kamyarlajani/Online-Bid-Items-NodeJS/master/biddingmini.gif)   
 
 ### features:
 
