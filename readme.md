@@ -1,4 +1,4 @@
-# Online bid items Nodejs application
+# Online bid items Nodejs real time application
 
 This app is developed with Node.js and MongoDB, WS(Websocket) library.
 Online bidding items, with timer limits.
