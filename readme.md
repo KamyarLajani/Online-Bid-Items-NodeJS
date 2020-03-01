@@ -27,7 +27,7 @@ If an item sold, user can see the bidder(last bid) user information and contact 
 
 
 
-### Video
+### Full video
 
 [Youtube](https://www.youtube.com/watch?v=ASmErK8-OSc)
 
